@@ -194,4 +194,26 @@ On each iteration of the loop, create a new p element. Set its textContent equal
     Based on what we did earlier to display this type of data, write code that will display the response in your HTML document. 
 */
 
-// CODE HERE
+//CODE HERE
+const foodForm = document.getElementById("food-form")
+
+const createFood = (e) => {
+  e.preventDefault()
+
+  const foodInput = document.getElementById('food-input')
+
+  let body = {
+    newFood: foodInput.value
+  }
+
+  axios
+    .post(`http://localhost:3000/food`, body)
+    .then((res) => {
+      let p = document.createElement("p")
+      document.body.appendChild(p).textContent = foodInput.value
+      foodForm.reset()
+    })
+    .catch((err) => console.log(err));
+}
+
+foodForm.addEventListener('submit', createFood)
